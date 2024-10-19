@@ -1,1 +1,1 @@
-# benmarking-ml4q
+# benmarking Machine Learning for Quantum Properties Estimation
