@@ -1,0 +1,9 @@
+qubits: 8, train_samples: 20, test loss: 0.1499710977077484
+qubits: 8, train_samples: 50, test loss: 0.10932832211256027
+qubits: 8, train_samples: 90, test loss: 0.08113208413124084
+qubits: 10, train_samples: 20, test loss: 0.16905498504638672
+qubits: 10, train_samples: 50, test loss: 0.1466931700706482
+qubits: 10, train_samples: 90, test loss: 0.11700711399316788
+qubits: 12, train_samples: 20, test loss: 0.23194262385368347
+qubits: 12, train_samples: 50, test loss: 0.24429745972156525
+qubits: 12, train_samples: 90, test loss: 0.24866050481796265
