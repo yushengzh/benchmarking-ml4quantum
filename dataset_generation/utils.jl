@@ -1,10 +1,7 @@
 using CSV
 using DataFrames
 
-function write_dataset_to_csv_heisenberg(dataset, filename)
-    df = DataFrame(coupling_matrix=dataset[1][1], ground_state_energy=dataset[1][2], entropy=dataset[1][3], corrzz=correlation_matrix[1][4])
-    CSV.write(filename, df)
-end;
+
 
 function write_dataset_to_csv_rydberg(dataset, filename, attributes)
     df = DataFrame(nsites=dataset[1][1], unit_disk_radius=dataset[1][2], C6=dataset[1][3],
@@ -13,26 +10,36 @@ function write_dataset_to_csv_rydberg(dataset, filename, attributes)
     CSV.write(filename, df)
 end;
 
-function write_dataset_to_csv_cluster_ising(dataset, filename)
-    df = DataFrame(qubits_num=dataset[1][1], h1=dataset[1][2], h2=dataset[1][3],
-                    energy=dataset[1][4], entropy=dataset[1][5], corrzz=dataset[1][6])
-    CSV.write(filename, df)
-end;
 
 function write_dataset_to_csv_tf_ising(dataset, filename)
     df = DataFrame(qubits_num=dataset[1][1], J=dataset[1][2], energy=dataset[1][3], entropy=dataset[1][4], corrzz=dataset[1][5])
     CSV.write(filename, df)
 end;
 
-function write_dataset_to_csv_xxz(dataset, filename)
-    df = DataFrame(qubits_num=dataset[1][1], delta=dataset[1][2], energy=dataset[1][3], entropy=dataset[1][4], corrzz=dataset[1][5])
-    CSV.write(filename, df)
-end;
 
 # Adatped from Huang et al. 2023
 function make_coupling_strength_huang(Nx, Ny)
     N = 2 * Nx * Ny - Nx - Ny
     coupling_strength = [2.0 * (rand() + 1e-6) for i in 1:N]
+    return coupling_strength
+end;
+
+function make_coupling_strength_huang__ood(Nx, Ny)
+    N = 2 * Nx * Ny - Nx - Ny
+    coupling_strength = [-2.0 * (rand() + 1e-6) for i in 1:N]
+    return coupling_strength
+end;
+
+function make_coupling_matrix_tfim(N)
+    # uniformly sample the coupling strength from [0, 2]
+    coupling_strength = [2.0 * (rand() + 1e-6) for i in 1:N-1]
+    return coupling_strength
+end;
+
+
+function make_coupling_matrix_tfim_ood(N)
+    # uniformly sample the coupling strength from [0, 2]
+    coupling_strength = [4.0 * (rand() + 1e-6)+2.0 for i in 1:N-1]
     return coupling_strength
 end;
 
@@ -91,3 +98,6 @@ function obs2samples(qubits_num, shots, obs)
     return samples
 end;
 
+function cosine_similarity(u, v)
+    return dot(u, v) / (norm(u) * norm(v))
+end;

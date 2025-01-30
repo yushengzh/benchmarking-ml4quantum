@@ -20,10 +20,10 @@ function heisenberg_1d_tang(N, spin, nsweeps, maxdim, cutoff, coupling_strength)
 end;
 
 # Huang et al. 2022 Science
-function heisenberg_2d_huang(Nx, Ny, spin, nsweeps, coupling_strength, maxdim, cutoff, device=identity)
+function heisenberg_2d_huang(Nx, Ny, spin, nsweeps, coupling_strength, maxdim, cutoff)
     N = Nx * Ny
     J = coupling_strength
-    sites = siteinds("S=$spin", N; conserve_qns=true)
+    sites = siteinds("S=$spin", N)
     lattice = square_lattice(Nx, Ny; yperiodic=false)
     i = 1
     os = OpSum()
@@ -43,32 +43,6 @@ function heisenberg_2d_huang(Nx, Ny, spin, nsweeps, coupling_strength, maxdim, c
     return energy, psi, H
 end;
 
-
-
-function heisenberg_2d(Nx, Ny, spin, nsweeps, coupling_strength, maxdim, cutoff, device=identity)
-    N = Nx * Ny
-    J = coupling_strength
-    sites = siteinds("S=$spin", N; conserve_qns=true)
-    lattice = square_lattice(Nx, Ny; yperiodic=false)
-    
-    os = OpSum()
-    for b in lattice
-        Ji = J[cld(b.s1, Ny) , mod(b.s1, Ny) == 0 ? Ny : mod(b.s1, Ny)]
-        Jj = J[cld(b.s2, Ny) , mod(b.s2, Ny) == 0 ? Ny : mod(b.s2, Ny)]
-        Jij = max(Ji, Jj)
-        os += Jij / 2, "S+", b.s1, "S-", b.s2
-        os += Jij / 2, "S-", b.s1, "S+", b.s2
-        os += Jij, "Sz", b.s1, "Sz", b.s2
-    end
-    H = MPO(os, sites)
-    # H = map(os -> device(MPO(Float32, os, sites)), os)
-    state = [isodd(n) ? "Up" : "Dn" for n=1:N]
-    # psi0 = device(complex.(MPS(sites, state)))
-    psi0 = MPS(sites, state)
-    energy, psi = dmrg(H, psi0; nsweeps, maxdim, cutoff)
-    println("Energy: ", energy)
-    return energy, psi, H
-end;
 
 
 # Zhu et al. 2022
@@ -128,12 +102,12 @@ function cluster_ising_1d(N, spin, nsweeps, maxdim, cutoff, h1, h2)
     H = MPO(os, sites);
     psi0 = MPS(sites, N -> isodd(N) ? "Up" : "Dn");
     energy, psi = dmrg(H, psi0; nsweeps, maxdim, cutoff, outputlevel=0);
-    return energy, psi, H
+    return energy, psi 
 end;
 
 # Zhu et al. 2022
 # ferromagnetic_ising_1d
-function transverse_field_ising_1d(N, spin, nsweeps, maxdim, cutoff, coupling_strength)
+function transverse_field_ising_1d(N, spin, nsweeps, maxdim, cutoff, coupling_strength, eigsolve_krylovdim)
     sites = siteinds("S=$spin", N)
     os = OpSum()
     J = coupling_strength
@@ -148,9 +122,9 @@ function transverse_field_ising_1d(N, spin, nsweeps, maxdim, cutoff, coupling_st
     end;
     H = MPO(os, sites)
     psi_init = MPS(sites, N -> isodd(N) ? "Up" : "Dn")
-    ground_state_energy, psi1 = dmrg(H, psi_init; nsweeps, maxdim, cutoff);
+    ground_state_energy, psi1 = dmrg(H, psi_init; nsweeps, maxdim, cutoff, eigsolve_krylovdim, outputlevel=0);
     psi_init2 = MPS(sites, N -> isodd(N) ? "Up" : "Dn")
-    first_excited_energy, psi2 = dmrg(H, [psi1], psi_init2; nsweeps, maxdim, cutoff, weight);
+    first_excited_energy, psi2 = dmrg(H, [psi1], psi_init2; nsweeps, maxdim, cutoff, weight, eigsolve_krylovdim, outputlevel=0);
     return ground_state_energy, psi1, first_excited_energy, psi2
 end;
 
