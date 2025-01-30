@@ -1,1 +1,1 @@
-# benmarking Machine Learning for Quantum Properties Estimation
+# ML and DL for Quantum System Learning
