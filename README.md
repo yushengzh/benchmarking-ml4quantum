@@ -1,1 +1,1 @@
-# ML and DL for Quantum System Learning
+# Learning for Quantum Systems
