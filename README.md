@@ -18,7 +18,7 @@ The dataset we used is released on [Google drive](https://drive.google.com/drive
 
 ## Citation
 
-If you use the source code and datasets in your publication, please cite:
+If you find the source code and datasets useful in your research, please cite:
 >
     @inproceedings{zhao2025rethinkq,
         title={Rethink the Role of Deep Learning towards Large-scale Quantum Systems},
