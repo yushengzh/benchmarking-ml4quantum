@@ -38,9 +38,9 @@ To set up the environment, run the following command to install the other requir
 If you find the source code and datasets useful in your research, please cite:
 >
     @inproceedings{zhao2025rethinkq,
-        title={Rethink the Role of Deep Learning towards Large-scale Quantum Systems},
-        author={Yusheng, Zhao and Chi, Zhang and Yuxuan, Du},
-        booktitle={International Conference on Machine Learning (ICML)},
-        year={2025}
+    title={Rethink the Role of Deep Learning towards Large-scale Quantum Systems},
+    author={Zhao, Yusheng and Zhang, Chi and Du, Yuxuan},
+    booktitle={International Conference on Machine Learning (ICML)},
+    year={2025}
     }
 
