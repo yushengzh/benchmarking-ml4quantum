@@ -12,7 +12,7 @@ The dataset we collected and used is released on [Google Drive](https://drive.go
 
 Launch Julia and activate the project.
 - Julia (version = 1.11)
-- Required Packages include `Itensors.jl`, `ITensorMPS.jl`, `PastaQ.jl`, et al.
+- Required packages include `Itensors.jl`, `ITensorMPS.jl`, `PastaQ.jl`.
 >
     using Pkg
     Pkg.activate(".")
@@ -37,9 +37,9 @@ To set up the environment, run the following command to install the other requir
 
 If you find the source code and datasets useful in your research, please cite:
 >
-    @inproceedings{zhao2025rethinkq,
+    @inproceedings{zhao2025rethink,
     title={Rethink the Role of Deep Learning towards Large-scale Quantum Systems},
-    author={Zhao, Yusheng and Zhang, Chi and Du, Yuxuan},
+    author={Yusheng Zhao and Chi Zhang and Yuxuan Du},
     booktitle={International Conference on Machine Learning (ICML)},
     year={2025}
     }
